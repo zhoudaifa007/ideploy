@@ -1,10 +1,10 @@
 # -*- coding:utf-8 -*-
 import paramiko
 
-host  = '172.20.32.157'
+host  = '10.10.10.10'
 port = 22
 user = 'root'
-password = 'Midea@123'
+password = '******'
 src = "F:/work1/cloud_dts1/cloud-dts-parent/cloud-dts-track/cloud-dts-track-provider/target/cloud-dts-track-provider-0.0.1-SNAPSHOT.jar"
 dst = "/app/zdf/cloud-dts-track-provider-0.0.1-SNAPSHOT.jar"
 

@@ -1,9 +1,9 @@
 # -*- coding:utf-8 -*-
 import paramiko
 
-host  = '172.20.32.157'
+host  = '10.10.10.10'
 user = 'root'
-password = 'Midea@123'
+password = '******'
 
 def sftp_upload_file(server_path, local_path):
     t = paramiko.Transport((host, 22))
