@@ -1,0 +1,11 @@
+remote:
+   ip: 10.10.10.10
+   port: 22
+   user: root
+   passWord: 123456
+   filePath: /app/zdf/
+   fileName: http.jar
+
+local:
+   filePath: F:\work1\\target\
+   fileName: http-SNAPSHOT.jar

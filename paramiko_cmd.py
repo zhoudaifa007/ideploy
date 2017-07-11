@@ -1,17 +1,41 @@
 # -*- coding:utf-8 -*-
 import paramiko
+from deploy_config import ConfigHandler
 
-host  = '10.10.10.10'
-user = 'root'
-password = '******'
 
-def sftp_upload_file(server_path, local_path):
-    t = paramiko.Transport((host, 22))
-    t.connect(username=user, password=password)
-    sftp = paramiko.SFTPClient.from_transport(t)
-    sftp.put("F:/work1/cloud_dts1/cloud-dts-parent/cloud-dts-track/cloud-dts-track-provider/target/cloud-dts-track-provider-0.0.1-SNAPSHOT.jar", "/app/zdf/cloud-dts-track-provider-0.0.1-SNAPSHOT.jar")
-    t.close()
+class SftpCmd(object):
+    def __init__(self, host, port, user, password):
+        self.host = host
+        self.port = port
+        self.user = user
+        self.password = password
+
+    def connect(self):
+        self.ssh_client = paramiko.SSHClient()
+        self.ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        self.ssh_client.connect(self.host, self.port, self.user, self.password)
+        print("connect sftp success")
+
+    def execCmd(self, cmd):
+        self.ssh_client.exec_command(cmd)
+
+    def close(self):
+        self.ssh_client.close()
+
+    def test(self):
+        cmd1 = "cd /app/zdf"
+        self.ssh_client.exec_command(cmd1)
+        cmd2 = "cd /app/zdf;ls -l"
+        std_in, std_out, std_err = self.ssh_client.exec_command(cmd2)
+        for line in std_out:
+            print(line.strip("\n"))
 
 
 if __name__ == '__main__':
-    sftp_upload_file("/root/bug.txt", "D:/bug.txt")
+    configHandler = ConfigHandler()
+    host = configHandler.getProperty('remote', 'ip')
+    port = configHandler.getProperty('remote', 'port')
+    user = configHandler.getProperty('remote', 'user')
+    passWord = configHandler.getProperty('remote', 'passWord')
+    sftpCmd = SftpCmd(host, port, user, passWord)
+    sftpCmd.connect()
