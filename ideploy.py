@@ -38,11 +38,11 @@ class DeployJar(object):
         createLink = "ln -s " + self.remoreDst + " " + remoreSoltLink
         self.sftp_cmd.execCmd(createLink)
         # step5:停止进程
-        stopCmd = configHandler.getProperty('remote', 'filePath') + "bin/stop.sh"
-        self.sftp_cmd.execCmd(stopCmd)
-        startCmd = configHandler.getProperty('remote', 'filePath') + "bin/start.sh"
-        self.sftp_cmd.execCmd(startCmd)
+        stopCmd = configHandler.getProperty('remote', 'filePath') + "stop.sh"
+        self.sftp_cmd.invokeShell(stopCmd)
         # step6:启动进程
+        startCmd = configHandler.getProperty('remote', 'filePath') + "start.sh"
+        self.sftp_cmd.invokeShell(startCmd)
         self.sftp_cmd.close()
 
 if __name__ == '__main__':
